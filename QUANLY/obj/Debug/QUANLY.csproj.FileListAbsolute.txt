@@ -28,3 +28,4 @@ C:\Users\HOANG\OneDrive\Môn học\18-19 Học kỳ 1\Đồ án chuyên ngành\Q
 C:\Users\HOANG\OneDrive\Môn học\18-19 Học kỳ 1\Đồ án chuyên ngành\QUANLY\QUANLY\obj\Debug\QUANLY.exe
 C:\Users\HOANG\OneDrive\Môn học\18-19 Học kỳ 1\Đồ án chuyên ngành\QUANLY\QUANLY\obj\Debug\QUANLY.pdb
 C:\Users\HOANG\OneDrive\Môn học\18-19 Học kỳ 1\Đồ án chuyên ngành\QUANLY\QUANLY\obj\Debug\QUANLY.DICHVU_KH.resources
+C:\Users\Hoang\OneDrive\Môn học\18-19 Học kỳ 1\Đồ án chuyên ngành\QUANLY\QUANLY\obj\Debug\QUANLY.TTNV.resources

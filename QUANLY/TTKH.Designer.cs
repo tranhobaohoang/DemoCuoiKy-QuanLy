@@ -83,13 +83,13 @@
             this.dgv_KH.Location = new System.Drawing.Point(34, 149);
             this.dgv_KH.Name = "dgv_KH";
             this.dgv_KH.Size = new System.Drawing.Size(726, 213);
-            this.dgv_KH.TabIndex = 2;
+            this.dgv_KH.TabIndex = 6;
             // 
             // btn_Timkiem
             // 
-            this.btn_Timkiem.Location = new System.Drawing.Point(157, 63);
+            this.btn_Timkiem.Location = new System.Drawing.Point(677, 123);
             this.btn_Timkiem.Name = "btn_Timkiem";
-            this.btn_Timkiem.Size = new System.Drawing.Size(82, 33);
+            this.btn_Timkiem.Size = new System.Drawing.Size(82, 20);
             this.btn_Timkiem.TabIndex = 0;
             this.btn_Timkiem.Text = "Tìm Kiếm";
             this.btn_Timkiem.UseVisualStyleBackColor = true;
@@ -97,13 +97,12 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btn_Timkiem);
             this.groupBox1.Controls.Add(this.btn_XoaKH);
             this.groupBox1.Controls.Add(this.btn_SuaKH);
             this.groupBox1.Controls.Add(this.btn_ThemKH);
-            this.groupBox1.Location = new System.Drawing.Point(477, 8);
+            this.groupBox1.Location = new System.Drawing.Point(448, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(283, 109);
+            this.groupBox1.Size = new System.Drawing.Size(312, 109);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Điều Khiển";
@@ -149,32 +148,35 @@
             this.txt_SdtKH.Location = new System.Drawing.Point(178, 101);
             this.txt_SdtKH.Name = "txt_SdtKH";
             this.txt_SdtKH.Size = new System.Drawing.Size(223, 20);
-            this.txt_SdtKH.TabIndex = 5;
+            this.txt_SdtKH.TabIndex = 4;
             // 
             // txt_EmailKH
             // 
             this.txt_EmailKH.Location = new System.Drawing.Point(178, 75);
             this.txt_EmailKH.Name = "txt_EmailKH";
             this.txt_EmailKH.Size = new System.Drawing.Size(223, 20);
-            this.txt_EmailKH.TabIndex = 5;
+            this.txt_EmailKH.TabIndex = 3;
+            this.txt_EmailKH.Tag = "";
             // 
             // txt_TenKH
             // 
             this.txt_TenKH.Location = new System.Drawing.Point(178, 49);
             this.txt_TenKH.Name = "txt_TenKH";
             this.txt_TenKH.Size = new System.Drawing.Size(223, 20);
-            this.txt_TenKH.TabIndex = 5;
+            this.txt_TenKH.TabIndex = 2;
+            this.txt_TenKH.Tag = "";
             // 
             // txt_maKH
             // 
             this.txt_maKH.Location = new System.Drawing.Point(178, 23);
             this.txt_maKH.Name = "txt_maKH";
             this.txt_maKH.Size = new System.Drawing.Size(223, 20);
-            this.txt_maKH.TabIndex = 5;
+            this.txt_maKH.TabIndex = 1;
+            this.txt_maKH.Tag = "";
             // 
             // txt_Search
             // 
-            this.txt_Search.Location = new System.Drawing.Point(517, 123);
+            this.txt_Search.Location = new System.Drawing.Point(472, 123);
             this.txt_Search.Name = "txt_Search";
             this.txt_Search.Size = new System.Drawing.Size(199, 20);
             this.txt_Search.TabIndex = 5;
@@ -184,6 +186,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_Timkiem);
             this.Controls.Add(this.txt_maKH);
             this.Controls.Add(this.txt_TenKH);
             this.Controls.Add(this.txt_EmailKH);

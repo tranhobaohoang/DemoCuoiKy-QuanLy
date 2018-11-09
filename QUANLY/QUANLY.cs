@@ -25,6 +25,11 @@ namespace QUANLY
                 MessageBox.Show("Xin chào Quản lý đẹp trai xinh gái:  ");
             }
         }
-        
+
+        private void thêmSửaXóaNhânViênToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TTNV ttnv = new TTNV();
+            ttnv.ShowDialog();
+        }
     }
 }

@@ -50,6 +50,10 @@ namespace QUANLY
             cmd.Parameters.AddWithValue("TenKH", txt_TenKH.Text);
             cmd.Parameters.AddWithValue("EmailKH", txt_EmailKH.Text);
             cmd.Parameters.AddWithValue("SdtKH", txt_SdtKH.Text);
+            txt_maKH.Text = "";
+            txt_SdtKH.Text = "";
+            txt_EmailKH.Text = "";
+            txt_TenKH.Text = "";
             cmd.ExecuteNonQuery();
             Hienthi();
         }
@@ -70,10 +74,11 @@ namespace QUANLY
         {
             string sqlDelete = "DELETE FROM KHACHHANG WHERE MaKH=@MaKH";
             SqlCommand cmd = new SqlCommand(sqlDelete, con);
-            cmd.Parameters.AddWithValue("MaKH", txt_maKH.Text);
+            cmd.Parameters.AddWithValue("MaKH", dgv_KH.CurrentRow.Cells[0].Value);
+            /*cmd.Parameters.AddWithValue("MaKH", txt_maKH.Text);
             cmd.Parameters.AddWithValue("TenKH", txt_TenKH.Text);
             cmd.Parameters.AddWithValue("EmailKH", txt_EmailKH.Text);
-            cmd.Parameters.AddWithValue("SdtKH", txt_SdtKH.Text);
+            cmd.Parameters.AddWithValue("SdtKH", txt_SdtKH.Text);*/
             cmd.ExecuteNonQuery();
             Hienthi();
         }

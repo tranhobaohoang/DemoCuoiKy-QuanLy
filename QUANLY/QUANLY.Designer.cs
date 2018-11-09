@@ -75,6 +75,7 @@
             this.thêmSửaXóaNhânViênToolStripMenuItem.Name = "thêmSửaXóaNhânViênToolStripMenuItem";
             this.thêmSửaXóaNhânViênToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.thêmSửaXóaNhânViênToolStripMenuItem.Text = "Thêm - sửa - xóa nhân viên";
+            this.thêmSửaXóaNhânViênToolStripMenuItem.Click += new System.EventHandler(this.thêmSửaXóaNhânViênToolStripMenuItem_Click);
             // 
             // kháchHàngToolStripMenuItem
             // 

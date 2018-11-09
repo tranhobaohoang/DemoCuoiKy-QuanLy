@@ -1,11 +1,16 @@
 ﻿--tạo ràng buộc quy định trong trung tâm sẽ ntn? 
---ngày giờ trong xuất hóa đơn
---nộp bản mô tả chức năng, kế hoạch, file script, project
+/*
+Quy định về dịch vụ
+Quy định về khách hàng tới chăm sóc da. liệu trình 2 tuần 1 lần. kháchnếu quá hạn từ 3 tháng trở lên thì hủy gói dịch vụ hiện đó.
+*/
+--ngày giờ trong xuất hóa đơn  --ok
+--nộp bản mô tả chức năng, kế hoạch, file script, project--ok
 --báo cáo thống kê theo tuần,, quý năm
 USE master
 go
 
 DROP DATABASE QLKD
+go
 create DATABASE QLKD
 ON PRIMARY
 (
@@ -17,6 +22,7 @@ LOG ON
 	NAME=N'QLKD_log',
 	FILENAME='D:\Database\QLKD_log.ldf'
 )
+go
 USE QLKD
 go
 create TABLE NHANVIEN
@@ -49,7 +55,7 @@ go
 CREATE TABLE TENDN_MK
 (
 	PRIMARY KEY(MaDN,LoaiTK),
-	MaDN int not null ,
+	MaDN varchar (10) not null ,
 	MaNV varchar(10)  UNIQUE,
 	MaNQL varchar(10) UNIQUE,
 	LoaiTK int not null ,
@@ -57,23 +63,30 @@ CREATE TABLE TENDN_MK
 	MK nvarchar(20) not null
 )
 go
-create TABLE DICHVU
+create TABLE DICHVU --mot dich vu co the bao gom nhieu san pham
 (
 	MaDV varchar(10) not null PRIMARY KEY,
 	TenDV nvarchar(50) not null UNIQUE,
-	MaSP varchar(10),
 	MotaDV	nvarchar(100),
-	GiaDV money not null default(100000)--bang gia san pham X So luong san pham
 )
 go
-create TABLE SANPHAM
+create TABLE SANPHAM --mot san pham co the co trong nhieu dich vu khac nhau
 (
 	MaSP varchar(10) not null PRIMARY KEY,
 	TenSP nvarchar(50)not null UNIQUE,
 	MotaSP nvarchar(100),
 	GiaSP money not null default (100000),
-	SoluongSP int not null DEFAULT (0)
+	SoluongSP int not null DEFAULT (0) --so luong con lai-- de quan ly xuat nhap kho
 )
+create TABLE DVSP
+(
+	PRIMARY KEY(MaDV,MaSP),
+	MaDV varchar (10) not null,
+	MaSP varchar(10) not null,
+	GiaSP money not null,
+	GiaDV money not null default(100000)--bang gia san pham + gia san pham....
+)
+
 go
 create TABLE CTHD
 (
@@ -95,7 +108,7 @@ create table HOADON
 	MaKH varchar(10) not null,
 	MaDV varchar(10),
 	MaNV varchar(10)not null,
-	Ngayxuat date,
+	GiaDV money,
 	TongTien money
 )
 go
@@ -109,38 +122,62 @@ create TABLE BAOCAO
 	MaDV varchar(10) not null,
 	MaHD varchar(10) not null
 )
-go
--- rang buoc khoa ngoai cho tendn_mk--nhanvien
-ALTER TABLE TENDN_MK ADD CONSTRAINT FK_TDNMK_NV FOREIGN KEY (MaNV) REFERENCES NHANVIEN (MaNV)
-go
-ALTER TABLE TENDN_MK ADD CONSTRAINT FK_TDNMK_QL FOREIGN KEY (MaNQL) REFERENCES QUANLY (MaNQL)
-go
---rang buoc khoa ngoai cthd--hoadon
-ALTER TABLE CTHD ADD CONSTRAINT FK_CT_HD FOREIGN KEY (MaCTHD) REFERENCES HOADON (MaHD)
-go
---rang buoc khoa ngoai cthd--kh
-ALTER TABLE	HOADON ADD CONSTRAINT FK_HD_KH FOREIGN KEY (MaKH) REFERENCES KHACHHANG (MaKH)
-go
---rang buoc khoa ngoai cthd--nv
-ALTER TABLE HOADON ADD CONSTRAINT FK_HD_NV FOREIGN KEY (MaNV) REFERENCES NHANVIEN (MaNV)
-go
---rang buoc khoa ngoai cthd--dv
-ALTER TABLE HOADON ADD CONSTRAINT FK_HD_DV FOREIGN KEY (MaDV) REFERENCES DICHVU (MaDV)
-go
---rang buoc khoa ngoai cthd--sp
-ALTER TABLE HOADON ADD CONSTRAINT FK_HD_SP FOREIGN KEY (MaSP) REFERENCES SANPHAM (MaSP)
-go
---rang buoc khoa ngoai baocao--sp
-ALTER TABLE BAOCAO ADD CONSTRAINT FK_BC_SP FOREIGN KEY (MaSP) REFERENCES SANPHAM (MaSP)
-go
---rang buoc khoa ngoai baocao--dv
-ALTER TABLE BAOCAO ADD CONSTRAINT FK_BC_DV FOREIGN KEY (MaDV) REFERENCES DICHVU (MaDV)
-go
---rang buoc khoa ngoai baocao--quanly
-ALTER TABLE BAOCAO ADD CONSTRAINT FK_BC_QL FOREIGN KEY (MaNQL) REFERENCES QUANLY (MaNQL)
---success
-go
+
+GO
+ALTER TABLE [dbo].[BAOCAO]  WITH CHECK ADD  CONSTRAINT [FK_BAOCAO_HOADON] FOREIGN KEY([MaHD])
+REFERENCES [dbo].[HOADON] ([MaHD])
+GO
+ALTER TABLE [dbo].[BAOCAO] CHECK CONSTRAINT [FK_BAOCAO_HOADON]
+GO
+ALTER TABLE [dbo].[BAOCAO]  WITH CHECK ADD  CONSTRAINT [FK_BAOCAO_NHANVIEN] FOREIGN KEY([MaNV])
+REFERENCES [dbo].[NHANVIEN] ([MaNV])
+GO
+ALTER TABLE [dbo].[BAOCAO] CHECK CONSTRAINT [FK_BAOCAO_NHANVIEN]
+GO
+ALTER TABLE [dbo].[BAOCAO]  WITH CHECK ADD  CONSTRAINT [FK_BAOCAO_QUANLY] FOREIGN KEY([MaNQL])
+REFERENCES [dbo].[QUANLY] ([MaNQL])
+GO
+ALTER TABLE [dbo].[BAOCAO] CHECK CONSTRAINT [FK_BAOCAO_QUANLY]
+GO
+ALTER TABLE [dbo].[CTHD]  WITH CHECK ADD  CONSTRAINT [FK_CTHD_HOADON] FOREIGN KEY([MaHD])
+REFERENCES [dbo].[HOADON] ([MaHD])
+GO
+ALTER TABLE [dbo].[CTHD] CHECK CONSTRAINT [FK_CTHD_HOADON]
+GO
+ALTER TABLE [dbo].[HOADON]  WITH CHECK ADD  CONSTRAINT [FK_HOADON_KHACHHANG] FOREIGN KEY([MaKH])
+REFERENCES [dbo].[KHACHHANG] ([MaKH])
+GO
+ALTER TABLE [dbo].[HOADON] CHECK CONSTRAINT [FK_HOADON_KHACHHANG]
+GO
+ALTER TABLE [dbo].[TENDN_MK]  WITH CHECK ADD  CONSTRAINT [FK_TENDN_MK_NHANVIEN] FOREIGN KEY([MaNV])
+REFERENCES [dbo].[NHANVIEN] ([MaNV])
+GO
+ALTER TABLE [dbo].[TENDN_MK] CHECK CONSTRAINT [FK_TENDN_MK_NHANVIEN]
+GO
+ALTER TABLE [dbo].[TENDN_MK]  WITH CHECK ADD  CONSTRAINT [FK_TENDN_MK_QUANLY] FOREIGN KEY([MaNQL])
+REFERENCES [dbo].[QUANLY] ([MaNQL])
+GO
+ALTER TABLE [dbo].[TENDN_MK] CHECK CONSTRAINT [FK_TENDN_MK_QUANLY]
+GO
+ALTER TABLE [dbo].[DVSP]  WITH CHECK ADD  CONSTRAINT [FK_DVSP_CTHD] FOREIGN KEY([MaDV])
+REFERENCES [dbo].[CTHD] ([MaDV])
+GO
+ALTER TABLE [dbo].[DVSP] CHECK CONSTRAINT [FK_DVSP_CTHD]
+GO
+ALTER TABLE [dbo].[DVSP]  WITH CHECK ADD  CONSTRAINT [FK_DVSP_DICHVU] FOREIGN KEY([MaDV])
+REFERENCES [dbo].[DICHVU] ([MaDV])
+GO
+ALTER TABLE [dbo].[DVSP] CHECK CONSTRAINT [FK_DVSP_DICHVU]
+GO
+ALTER TABLE [dbo].[DVSP]  WITH CHECK ADD  CONSTRAINT [FK_DVSP_SANPHAM] FOREIGN KEY([MaSP])
+REFERENCES [dbo].[SANPHAM] ([MaSP])
+GO
+ALTER TABLE [dbo].[DVSP] CHECK CONSTRAINT [FK_DVSP_SANPHAM]
+GO
+
+
 USE QLKD
+go
 set dateformat dmy
 go
 --------------- INSERT VAO BANG NHANVIEN --------------------
@@ -168,9 +205,9 @@ insert QUANLY values('QL009',N'Trần Hồ Bảo Hoàng','tranhobaohoang2005@gma
 insert QUANLY values('QL010',N'Trần Hồ Bảo Hoàng','tranhobaohoang2006@gmail.com',N'01683061726','2')
 --------------- INSERT VAO BANG TENDN_MK QL --------------------
 go
-INSERT INTO TENDN_MK(MaNQL, LoaiTK,TENDN,MK)  
-VALUES ('QL001','2','nguyenvana','123');
+INSERT INTO TENDN_MK(MaDN,MaNQL,LoaiTK,TENDN,MK)  
+VALUES ('QL001','QL001','2','nguyenvana','123');
 --------------- INSERT VAO BANG TENDN_MK NV --------------------
 go
-INSERT INTO TENDN_MK(MaNV, LoaiTK,TENDN,MK)  
-VALUES ('NV001','1','nguyenvanb','123');
+INSERT INTO TENDN_MK(MaDN,MaNV,LoaiTK,TENDN,MK)  
+VALUES ('NV001','NV001','1','nguyenvanb','123');
